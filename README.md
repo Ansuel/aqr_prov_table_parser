@@ -21,6 +21,8 @@ The AQR provision table has a specific format. Here's a breakdown of its structu
   BIT(7) is set, the length is incremented by 1.
   
   GENMASK(6, 2) represents the MMD reg.
+
+  Data Length must always be multiplied by 2 (and eventually incremented)
 - **Reg Value and Mask**: The reg value and mask are all in big endian.
 
 Here's an example of the AQR provision table format:
@@ -32,7 +34,7 @@ Here's an example of the AQR provision table format:
 || || || || || || || || Mask  || || || || Mask
 || || || || || || Value       || || Value
 || || || || Address            Address
-|| || || Data length (to increment if BIT 7 set)
+|| || || Data length (to increment if BIT 7 set and * 2)
 || || Reg Header (Length Increment, MMD reg)
 || Section priority
 Section header

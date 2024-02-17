@@ -83,6 +83,7 @@ def check_bugged_section(file, mmd_reg):
 # regs header is in format followed by the length of the subsection
 # BIT(7) increment length by 1
 # GENMASK(6, 2) MMD reg
+# Data Length must always be multiplied by 2 (and eventually incremented)
 # 
 # Reg Value and Mask are all in big endian
 # 
@@ -93,7 +94,7 @@ def check_bugged_section(file, mmd_reg):
 # || || || || || || || || Mask  || || || || Mask
 # || || || || || || Value       || || Value
 # || || || || Address           Address
-# || || || Data length (to increment if BIT 7 set)
+# || || || Data length (to increment if BIT 7 set and * 2)
 # || || Reg Header (Length Increment, MMD reg)
 # || Section priority 
 # Section header
