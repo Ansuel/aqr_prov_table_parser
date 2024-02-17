@@ -7,7 +7,16 @@ This script, `aqr_prov_table_parser.py`, is a Python script designed to parse an
 The script can be run directly from the command line as follows:
 
 ```bash
-./aqr_prov_table_parser.sh FILE
+usage: aqr_prov_table_parser.py [-h] [--json] fw
+
+AQR Provision Table parser
+
+positional arguments:
+  fw          path to AQR Firmware
+
+options:
+  -h, --help  show this help message and exit
+  --json      Output parsed values in JSON format
 ```
 
 ## AQR Provision Table Format

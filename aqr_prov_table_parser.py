@@ -16,11 +16,21 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 """
 
-# Usage ./aqr_prov_table_parser.sh FILE
+# usage: aqr_prov_table_parser.py [-h] [--json] fw
+#
+# AQR Provision Table parser
+#
+# positional arguments:
+#   fw          path to AQR Firmware
+#
+# options:
+#   -h, --help  show this help message and exit
+#   --json      Output parsed values in JSON format
 
-import sys
+import json
 import os
 import io
+import argparse
 
 PRIMARY_OFFSET_OFFSET = 0x8
 PRIMARY_OFFSET_SHIFT = 12
@@ -193,14 +203,23 @@ def print_prov_table(prov_table):
 					print("FOUND BUG IN PROVISION TABLE at pos {} for MMD reg {}".format(
 						reg_val_mask["pos"], mmd_reg))
 
-def main(argv):
-	filename = argv[0]
+def main():
+	parser = argparse.ArgumentParser(description="AQR Provision Table parser")
+	parser.add_argument('aqr_firmware', metavar="fw", help="path to AQR Firmware")
+	parser.add_argument('--json', dest="use_json", action="store_const", const=True,
+				help="Output parsed values in JSON format")
+
+	args = parser.parse_args()
+	filename = args.aqr_firmware
 
 	file = io.open(filename, "rb")
 	prov_table = parse_prov_table(file)
 	file.close()
 
-	print_prov_table(prov_table)
+	if args.use_json:
+		print(json.dumps(prov_table))
+	else:
+		print_prov_table(prov_table)
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
