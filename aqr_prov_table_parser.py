@@ -49,11 +49,16 @@ def extract_prov_table_offset(file):
 
 	return primary_offset + dram_offset + PROV_TABLE_OFFSET
 
-def parse_reg_val_mask(file, mmd_reg):
+def parse_reg_val_mask(file, bugged=False):
 	reg = int.from_bytes(file.read(2), byteorder="little")
 	val = int.from_bytes(file.read(2), byteorder="little")
 	mask = int.from_bytes(file.read(2), byteorder="little")
-	print("MMD: {}\tReg: {}\tVal: {}\tMaks: {}".format(hex(mmd_reg), hex(reg), hex(val), hex(mask)))
+	reg_val_mask_tbl = { "reg": hex(reg), "val": hex(val), "mask": hex(mask) }
+	if bugged:
+		reg_val_mask_tbl["pos"] = file.tell() - 6
+		reg_val_mask_tbl["bugged"] = True
+
+	return reg_val_mask_tbl
 
 # For some reason and I have no idea how some Provision Table
 # are broken and provide reg-val-mask outside the length value
@@ -67,14 +72,58 @@ def parse_reg_val_mask(file, mmd_reg):
 # To detect this assume the max priority is 3F
 # And skip them if detected
 # 
-def check_bugged_section(file, mmd_reg):
+def check_bugged_section(file):
 	pos = file.tell()
 	header_0 = file.read(1)
 	header_1 = file.read(1)
 	file.seek(pos, os.SEEK_SET)
 	if header_0[0] == 0x3 and header_1[0] & 0xc0:
-		print("FOUND BUG IN PROVISION TABLE at pos {} for MMD reg {}".format(pos, hex(mmd_reg)))
-		parse_reg_val_mask(file, mmd_reg)
+		return parse_reg_val_mask(file, True)
+
+def consume_subsection(file, regs_header):
+	increment_length = regs_header & 0x80
+	subsection_tbl = {}
+
+	mmd_reg = regs_header & 0x7c
+	mmd_reg >>= 2
+	if mmd_reg > 0x1e:
+		print("Read invalid MMD reg {}".format(hex(mmd_reg)))
+		exit(1)
+	subsection_tbl["mmd_reg"] = hex(mmd_reg)
+
+	length = int.from_bytes(file.read(1)) * 2
+	if increment_length:
+		length += 1
+	subsection_tbl["expected_length"] = length
+
+	subsection_tbl["regs"] = []
+	for _ in range(length):
+		subsection_tbl["regs"].append(parse_reg_val_mask(file))
+
+	# Check if for some reason the Provision Table is bugged
+	# and have confusing header values
+	bugged_reg = check_bugged_section(file)
+	if bugged_reg:
+		subsection_tbl["regs"].append(bugged_reg)
+
+	return subsection_tbl
+
+def consume_subsections(file, prov_table_offset):
+	subsections = []
+	while file.tell() <= prov_table_offset + PROV_TABLE_SIZE_MAX:
+		regs_header = file.read(1)
+		# Prov Table ended or we are in a new section
+		if not regs_header[0] or regs_header[0] == 0x3:
+			# Go back one and break loop
+			file.seek(file.tell()-1, os.SEEK_SET)
+			break
+
+		# Assume subsection header in any other case
+		if regs_header[0] & 0x7c:
+			subsection = consume_subsection(file, regs_header[0])
+			subsections.append(subsection)
+
+	return subsections
 
 # Each section ALWAYS stats with 0x3 followed by priority ID
 # 
@@ -101,54 +150,57 @@ def check_bugged_section(file, mmd_reg):
 def parse_prov_table(file):
 	prov_table_offset = extract_prov_table_offset(file)
 
+	prov_table = []
+
 	file.seek(prov_table_offset, os.SEEK_SET)
 
 	while file.tell() <= prov_table_offset + PROV_TABLE_SIZE_MAX:
 		# Check section header start
-		header = file.read(1)
-
-		# Section header is ALWAYS 0x3
-		if header[0] == 0x3:
-			# Get priority ID
-			priority = int.from_bytes(file.read(1))
-			print("Found a new section with priority {}".format(priority))
-			continue
-
-		# Assume subsection header in any other case
-		if header[0] & 0x7c:
-			increment_length = header[0] & 0x80
-
-			mmd_reg = header[0] & 0x7c
-			mmd_reg >>= 2
-			if mmd_reg > 0x1e:
-				print("Read invalid MMD reg {}".format(hex(mmd_reg)))
-				exit(1)
-			
-			length = int.from_bytes(file.read(1)) * 2
-			if increment_length:
-				length += 1
-
-			for _ in range(length):
-				parse_reg_val_mask(file, mmd_reg)
-
-			# Check if for some reason the Provision Table is bugged
-			# and have confusing header values
-			check_bugged_section(file, mmd_reg)
-
-			continue
+		section_header = file.read(1)
 
 		# Assume Provision Table ended
-		if not header[0]:
+		if not section_header[0]:
 			break
+
+		# Broken Provision Table??
+		if section_header[0] != 0x3:
+			print("Failed to parse Provision Table. Is the provision Table broken?")
+			exit(1)
+
+		# Section header is ALWAYS 0x3
+		# Get priority ID
+		priority = int.from_bytes(file.read(1))
+		section_tbl = { "priority": priority }
+		# Consume subsections until we find a new section header
+		section_tbl["subsections"] = consume_subsections(file, prov_table_offset)
+
+		prov_table.append(section_tbl)
+
+	return prov_table
+
+def print_prov_table(prov_table):
+	for section in prov_table:
+		print("Found a new section with priority {}".format(section["priority"]))
+
+		for subsection in section["subsections"]:
+			mmd_reg = subsection["mmd_reg"]
+			for reg_val_mask in subsection["regs"]:
+				print("MMD: {}\tReg: {}\tVal: {}\tMaks: {}".format(
+					mmd_reg, reg_val_mask["reg"],
+					reg_val_mask["val"],
+					reg_val_mask["mask"]))
+				if "bugged" in reg_val_mask:
+					print("FOUND BUG IN PROVISION TABLE at pos {} for MMD reg {}".format(
+						reg_val_mask["pos"], mmd_reg))
 
 def main(argv):
 	filename = argv[0]
 
 	file = io.open(filename, "rb")
-
-	parse_prov_table(file)
-
+	prov_table = parse_prov_table(file)
 	file.close()
+
+	print_prov_table(prov_table)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
