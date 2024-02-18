@@ -40,6 +40,8 @@ HEADER_OFFSET = 0x300
 PROV_TABLE_OFFSET = 0x680
 PROV_TABLE_SIZE_MAX = 0x800
 
+ASSUMED_MAX_PRIORITY = 0x3f
+
 def extract_prov_table_offset(file):
 	file.seek(PRIMARY_OFFSET_OFFSET)
 
@@ -87,7 +89,7 @@ def check_bugged_section(file):
 	header_0 = file.read(1)
 	header_1 = file.read(1)
 	file.seek(pos, os.SEEK_SET)
-	if header_0[0] == 0x3 and header_1[0] & 0xc0:
+	if header_0[0] == 0x3 and header_1[0] & (~ASSUMED_MAX_PRIORITY & 0xff):
 		return parse_reg_val_mask(file, True)
 
 def consume_subsection(file, regs_header):
@@ -188,6 +190,40 @@ def parse_prov_table(file):
 
 	return prov_table
 
+def calculate_final_provision(prov_table, show_bugged=False):
+	final_provision = {}
+
+	# Very inefficient way but can handle unsorted dictonary
+	for priority in range(ASSUMED_MAX_PRIORITY):
+		for section in prov_table:
+			if section["priority"] != priority:
+				continue
+
+			for subsection in section["subsections"]:
+				mmd_reg = subsection["mmd_reg"]
+				if not mmd_reg in final_provision:
+					final_provision[mmd_reg] = {}
+
+				for reg_val_mask in subsection["regs"]:
+					if not show_bugged and "bugged" in reg_val_mask:
+						continue
+
+					reg = reg_val_mask["reg"]
+
+					if not reg in final_provision[mmd_reg]:
+						final_provision[mmd_reg][reg] = "0x0"
+
+					val = int(final_provision[mmd_reg][reg], 16)
+					val &= ~int(reg_val_mask["mask"], 16)
+					val |= int(reg_val_mask["val"], 16)
+					final_provision[mmd_reg][reg] = hex(val)
+
+		for index, section in enumerate(prov_table):
+			if section["priority"] == priority:
+				prov_table.pop(index)
+
+	return final_provision
+
 def print_prov_table(prov_table):
 	for section in prov_table:
 		print("Found a new section with priority {}".format(section["priority"]))
@@ -203,11 +239,30 @@ def print_prov_table(prov_table):
 					print("FOUND BUG IN PROVISION TABLE at pos {} for MMD reg {}".format(
 						reg_val_mask["pos"], mmd_reg))
 
+def print_final_prov_table(final_prov_table):
+	# Very inefficent way to print ordered regs
+	for mmd_reg in range(0x1f):
+		mmd_reg = hex(mmd_reg)
+		if not mmd_reg in final_prov_table:
+			continue
+
+		for reg in range(0xffff):
+			reg = hex(reg)
+			if not reg in final_prov_table[mmd_reg]:
+				continue
+
+			print("MMD: {}\tReg: {}\tVal: {}".format(
+				mmd_reg, reg, final_prov_table[mmd_reg][reg]))
+
 def main():
 	parser = argparse.ArgumentParser(description="AQR Provision Table parser")
 	parser.add_argument('aqr_firmware', metavar="fw", help="path to AQR Firmware")
 	parser.add_argument('--json', dest="use_json", action="store_const", const=True,
 				help="Output parsed values in JSON format")
+	parser.add_argument('--final-provision', dest="final_provision", action="store_const", const=True,
+				help="Calculate final provision accounted of priority section and masked/ORed regs.")
+	parser.add_argument('--final-show-bugged', dest="show_bugged", action="store_const", const=True,
+				help="Account for bugged values in final provision. Remember these values are actually ignored by the FW.")
 
 	args = parser.parse_args()
 	filename = args.aqr_firmware
@@ -216,8 +271,16 @@ def main():
 	prov_table = parse_prov_table(file)
 	file.close()
 
+	# Final provision is what is actually applied to the Aquantia PHY
+	# Accounted of section priority, and values with applied mask and or
+	# with each section.
+	if args.final_provision:
+		prov_table = calculate_final_provision(prov_table, show_bugged=args.show_bugged)
+
 	if args.use_json:
 		print(json.dumps(prov_table))
+	elif args.final_provision:
+		print_final_prov_table(prov_table)
 	else:
 		print_prov_table(prov_table)
 
