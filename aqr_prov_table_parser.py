@@ -31,6 +31,7 @@ import json
 import os
 import io
 import argparse
+import re
 
 PRIMARY_OFFSET_OFFSET = 0x8
 PRIMARY_OFFSET_SHIFT = 12
@@ -190,7 +191,7 @@ def parse_prov_table(file):
 
 	return prov_table
 
-def calculate_final_provision(prov_table, show_bugged=False):
+def calculate_final_provision(prov_table, reference_tbl=None, show_bugged=False):
 	final_provision = {}
 
 	# Very inefficient way but can handle unsorted dictonary
@@ -211,12 +212,14 @@ def calculate_final_provision(prov_table, show_bugged=False):
 					reg = reg_val_mask["reg"]
 
 					if not reg in final_provision[mmd_reg]:
-						final_provision[mmd_reg][reg] = "0x0"
+						final_provision[mmd_reg][reg] = { "val": "0x0" }
 
-					val = int(final_provision[mmd_reg][reg], 16)
+					val = int(final_provision[mmd_reg][reg]["val"], 16)
 					val &= ~int(reg_val_mask["mask"], 16)
 					val |= int(reg_val_mask["val"], 16)
-					final_provision[mmd_reg][reg] = hex(val)
+					final_provision[mmd_reg][reg] =  { "val": hex(val) }
+					if reference_tbl and mmd_reg in reference_tbl and reg in reference_tbl[mmd_reg]:
+						final_provision[mmd_reg][reg]["reg_friendly_name"] = reference_tbl[mmd_reg][reg]
 
 		for index, section in enumerate(prov_table):
 			if section["priority"] == priority:
@@ -251,8 +254,35 @@ def print_final_prov_table(final_prov_table):
 			if not reg in final_prov_table[mmd_reg]:
 				continue
 
-			print("MMD: {}\tReg: {}\tVal: {}".format(
-				mmd_reg, reg, final_prov_table[mmd_reg][reg]))
+			reg_friendly_name = ""
+			if "reg_friendly_name" in final_prov_table[mmd_reg][reg]:
+				reg_friendly_name = final_prov_table[mmd_reg][reg]["reg_friendly_name"]
+
+			print("MMD: {}\tReg: {}\tVal: {}\t{}".format(
+				mmd_reg, reg, final_prov_table[mmd_reg][reg]["val"], reg_friendly_name))
+
+def parse_reference_regs(reference_regs_file):
+	reference_tbl = {}
+	pattern = re.compile("^([0-9]+)\.([0-9]+) (.*)$")
+
+	file = io.open(reference_regs_file, "r")
+
+	# File is in format mmd_reg.address friendly name
+	for reg in file.readlines():
+		res = pattern.findall(reg)[0]
+
+		mmd_reg = hex(int(res[0]))
+		reg = hex(int(res[1]))
+		friendly_name = res[2]
+
+		if not mmd_reg in reference_tbl:
+			reference_tbl[mmd_reg] = {}
+
+		reference_tbl[mmd_reg][reg] = friendly_name
+
+	file.close()
+
+	return reference_tbl
 
 def parse_firmware(firmware_path):
 	file = io.open(firmware_path, "rb")
@@ -270,16 +300,23 @@ def main():
 				help="Calculate final provision accounted of priority section and masked/ORed regs.")
 	parser.add_argument('--final-show-bugged', dest="show_bugged", action="store_const", const=True,
 				help="Account for bugged values in final provision. Remember these values are actually ignored by the FW.")
+	parser.add_argument('--reference-regs', dest="reference_regs_file", default="reference_regs.txt",
+				help="Provide a reference regs file to add Friendly name to regs on dumping. Check the reference_regs.txt for the format. Only works with --final-provision")
 
 	args = parser.parse_args()
 
 	prov_table = parse_firmware(args.aqr_firmware)
 
+	reference_tbl = None
+	if args.reference_regs_file:
+		reference_tbl = parse_reference_regs(args.reference_regs_file)
+
 	# Final provision is what is actually applied to the Aquantia PHY
 	# Accounted of section priority, and values with applied mask and or
 	# with each section.
 	if args.final_provision:
-		prov_table = calculate_final_provision(prov_table, show_bugged=args.show_bugged)
+		prov_table = calculate_final_provision(prov_table, reference_tbl=reference_tbl,
+							show_bugged=args.show_bugged)
 
 	if args.use_json:
 		print(json.dumps(prov_table))

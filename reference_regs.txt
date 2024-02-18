@@ -1,0 +1,600 @@
+1.0 PMA/PMD control 1
+1.1 PMA/PMD status 1
+1.2 PMA/PMD device identifier
+1.3 PMA/PMD device identifier
+1.4 PMA/PMD speed ability
+1.5 PMA/PMD devices in package
+1.6 PMA/PMD devices in package
+1.7 PMA/PMD control 2
+1.8 PMA/PMD status 2
+1.9 PMA/PMD transmit disable
+1.10 PMD receive signal detect
+1.11 PMA/PMD extended ability
+1.12 10G-EPON PMA/PMD ability
+1.13 40G/100G PMA/PMD extended ability
+1.14 PMA/PMD package identifier
+1.15 PMA/PMD package identifier
+1.16 EEE capability
+1.17 EPoC PMA/PMD ability
+1.18 BASE-T1 PMA/PMD extended ability
+1.19 25G PMA/PMD extended ability
+1.20 Reserved
+1.21 2.5G/5G PMA/PMD extended ability
+1.22 BASE-H PMA/PMD extended ability
+1.23 200G PMA/PMD extended ability
+1.24 400G PMA/PMD extended ability
+1.25 Reserved
+1.26 Reserved
+1.27 PMD transmit disable extension
+1.28 PMD receive signal detect extension
+1.29 Reserved
+1.30 10P/2B PMA/PMD control
+1.31 10P/2B PMA/PMD status
+1.32 10P/2B link partner PMA/PMD controla
+1.33 10P/2B link partner PMA/PMD statusa
+1.34 Reserved
+1.35 Reserved
+1.36 10P/2B link loss counter
+1.37 10P/2B RX SNR margin
+1.38 10P/2B link partner RX SNR margina
+1.39 10P/2B line attenuation
+1.40 10P/2B link partner line attenuationa
+1.41 10P/2B line quality thresholds
+1.42 2B link partner line quality thresholdsa
+1.43 10P FEC correctable errors counter
+1.44 10P FEC uncorrectable errors counter
+1.45 10P link partner FEC correctable errorsa
+1.46 10P link partner FEC uncorrectable errors
+1.47 10P electrical length
+1.48 10P link partner electrical lengtha
+1.49 10P PMA/PMD general configurationa
+1.50 10P PSD configurationa
+1.51 10P downstream data rate configurationa
+1.52 10P downstream data rate configurationa
+1.53 10P downstream Reed-Solomon configurationa
+1.54 10P upstream data ratea
+1.55 10P upstream data ratea
+1.56 10P upstream Reed-Solomon configurationa
+1.57 10P tone group
+1.58 10P tone group
+1.59 10P tone control parametersa
+1.60 10P tone control parametersa
+1.61 10P tone control parametersa
+1.62 10P tone control parametersa
+1.63 10P tone control parametersa
+1.64 10P tone control actiona
+1.65 10P tone status
+1.66 10P tone status
+1.67 10P tone status
+1.68 10P outgoing indicator bits
+1.69 10P incoming indicator bits
+1.70 10P cyclic extension configuration
+1.71 10P attainable downstream data rate
+1.72 Reserved
+1.73 Reserved
+1.74 Reserved
+1.75 Reserved
+1.76 Reserved
+1.77 Reserved
+1.78 Reserved
+1.79 Reserved
+1.80 2B general parameter
+1.81 2B PMD parameters
+1.82 2B PMD parameters
+1.83 2B PMD parameters
+1.84 2B PMD parameters
+1.85 2B PMD parameters
+1.86 2B PMD parameters
+1.87 2B PMD parameters
+1.88 2B PMD parameters
+1.89 2B code violation errors counter
+1.90 2B link partner code violation errorsa
+1.91 2B errored seconds counter
+1.92 2B link partner errored secondsa
+1.93 2B severely errored seconds counter
+1.94 2B link partner severely errored secondsa
+1.95 2B LOSW counter
+1.96 2B link partner LOSWa
+1.97 2B unavailable seconds counter
+1.98 2B link partner unavailable secondsa
+1.99 2B state defects
+1.100 2B link partner state defectsa
+1.101 2B negotiated constellation
+1.102 2B extended PMD parameters
+1.103 2B extended PMD parameters
+1.104 2B extended PMD parameters
+1.105 2B extended PMD parameters
+1.106 2B extended PMD parameters
+1.107 2B extended PMD parameters
+1.108 2B extended PMD parameters
+1.109 2B extended PMD parameters
+1.110 Reserved
+1.111 Reserved
+1.112 Reserved
+1.113 Reserved
+1.114 Reserved
+1.115 Reserved
+1.116 Reserved
+1.117 Reserved
+1.117 Reserved
+1.118 Reserved
+1.119 Reserved
+1.120 Reserved
+1.121 Reserved
+1.122 Reserved
+1.123 Reserved
+1.124 Reserved
+1.125 Reserved
+1.126 Reserved
+1.127 Reserved
+1.128 Reserved
+1.129 MultiGBASE-T status
+1.130 MultiGBASE-T pair swap and polarity
+1.131 MultiGBASE-T TX power backoff and PHY short reach setting
+1.132 MultiGBASE-T test mode
+1.133 SNR operating margin channel A
+1.134 SNR operating margin channel B
+1.135 SNR operating margin channel C
+1.136 SNR operating margin channel D
+1.137 Minimum margin channel A
+1.138 Minimum margin channel B
+1.139 Minimum margin channel C
+1.140 Minimum margin channel D
+1.141 RX signal power channel A
+1.142 RX signal power channel B
+1.143 RX signal power channel C
+1.144 RX signal power channel D
+1.145 MultiGBASE-T skew delay
+1.146 MultiGBASE-T skew delay
+1.147 MultiGBASE-T fast retrain status and control
+1.148 Reserved
+1.149 Reserved
+1.150 BASE-R PMD control
+1.151 BASE-R PMD status
+1.152 BASE-R LP coefficient update, lane 0
+1.153 BASE-R LP status report, lane 0
+1.154 BASE-R LD coefficient update, lane 0
+1.155 BASE-R LD status report, lane 0
+1.156 BASE-R PMD status 2
+1.157 BASE-R PMD status 3
+1.158 Reserved
+1.159 Reserved
+1.160 1000BASE-KX control
+1.161 1000BASE-KX status
+1.162 PMA overhead control 1, 2, and 3
+1.163 PMA overhead control 1, 2, and 3
+1.164 PMA overhead control 1, 2, and 3
+1.165 PMA overhead status 1 and 2
+1.166 PMA overhead status 1 and 2
+1.167 Reserved
+1.168 Reserved
+1.169 Reserved
+1.170 BASE-R FEC ability
+1.171 BASE-R FEC control
+1.172 Single-lane PHY BASE-R FEC corrected blocks counter
+1.173 Single-lane PHY BASE-R FEC corrected blocks counter
+1.174 Single-lane PHY BASE-R FEC uncorrected blocks counter
+1.176 Reserved
+1.178 Reserved
+1.179 CAUI- 4 C2M and 25GAUI C2M recommended CTLE
+1.175 Single-lane PHY BASE-R FEC uncorrected blocks counter
+1.176 Reserved
+1.177 Reserved
+1.178 Reserved
+1.179 CAUI-4 C2M and 25GAUI C2M recommended CTLE
+1.180 25GAUI C2C and lane 0 CAUI-4 C2C transmitter equalization, receive direction
+1.181 CAUI-4 chip-to-chip transmitter equalization, receive direction, lane 1 through lane 3
+1.182 CAUI-4 chip-to-chip transmitter equalization, receive direction, lane 1 through lane 3
+1.183 CAUI-4 chip-to-chip transmitter equalization, receive direction, lane 1 through lane 3
+1.184 25GAUI C2C and lane 0 CAUI-4 C2C transmitter equalization, transmit direction
+1.185 CAUI-4 chip-to-chip transmitter equalization, transmit direction, lane 1 through lane 3
+1.186 CAUI-4 chip-to-chip transmitter equalization, transmit direction, lane 1 through lane 3
+1.187 CAUI-4 chip-to-chip transmitter equalization, transmit direction, lane 1 through lane 3
+1.188 Reserved
+1.189 Reserved
+1.191 Reserved
+1.192 Reserved
+1.193 Reserved
+1.194 Reserved
+1.195 Reserved
+1.196 Reserved
+1.197 Reserved
+1.198 Reserved
+1.199 Reserved
+1.199 Reserved
+1.200 RS-FEC control
+1.201 RS-FEC status
+1.202 RS-FEC corrected codewords counter
+1.203 RS-FEC corrected codewords counter
+1.204 RS-FEC uncorrected codewords counter
+1.205 RS-FEC uncorrected codewords counter
+1.206 RS-FEC lane mapping
+1.207 Reserved
+1.208 Reserved
+1.209 Reserved
+1.210 RS-FEC symbol error counter, lane 0 to 3
+1.211 RS-FEC symbol error counter, lane 0 to 3
+1.212 RS-FEC symbol error counter, lane 0 to 3
+1.213 RS-FEC symbol error counter, lane 0 to 3
+1.214 RS-FEC symbol error counter, lane 0 to 3
+1.215 RS-FEC symbol error counter, lane 0 to 3
+1.216 RS-FEC symbol error counter, lane 0 to 3
+1.217 RS-FEC symbol error counter, lane 0 to 3
+1.218 Reserved
+1.229 Reserved
+1.230 RS-FEC BIP error counter, lane 0 to 19
+1.231 RS-FEC BIP error counter, lane 0 to 19
+1.232 RS-FEC BIP error counter, lane 0 to 19
+1.233 RS-FEC BIP error counter, lane 0 to 19
+1.234 RS-FEC BIP error counter, lane 0 to 19
+1.235 RS-FEC BIP error counter, lane 0 to 19
+1.236 RS-FEC BIP error counter, lane 0 to 19
+1.237 RS-FEC BIP error counter, lane 0 to 19
+1.238 RS-FEC BIP error counter, lane 0 to 19
+1.239 RS-FEC BIP error counter, lane 0 to 19
+1.240 RS-FEC BIP error counter, lane 0 to 19
+1.241 RS-FEC BIP error counter, lane 0 to 19
+1.242 RS-FEC BIP error counter, lane 0 to 19
+1.243 RS-FEC BIP error counter, lane 0 to 19
+1.244 RS-FEC BIP error counter, lane 0 to 19
+1.245 RS-FEC BIP error counter, lane 0 to 19
+1.246 RS-FEC BIP error counter, lane 0 to 19
+1.247 RS-FEC BIP error counter, lane 0 to 19
+1.248 RS-FEC BIP error counter, lane 0 to 19
+1.249 RS-FEC BIP error counter, lane 0 to 19
+1.250 RS-FEC PCS lane mapping, lane 0 to 19
+1.251 RS-FEC PCS lane mapping, lane 0 to 19
+1.252 RS-FEC PCS lane mapping, lane 0 to 19
+1.253 RS-FEC PCS lane mapping, lane 0 to 19
+1.254 RS-FEC PCS lane mapping, lane 0 to 19
+1.255 RS-FEC PCS lane mapping, lane 0 to 19
+1.256 RS-FEC PCS lane mapping, lane 0 to 19
+1.257 RS-FEC PCS lane mapping, lane 0 to 19
+1.258 RS-FEC PCS lane mapping, lane 0 to 19
+1.259 RS-FEC PCS lane mapping, lane 0 to 19
+1.260 RS-FEC PCS lane mapping, lane 0 to 19
+1.261 RS-FEC PCS lane mapping, lane 0 to 19
+1.262 RS-FEC PCS lane mapping, lane 0 to 19
+1.263 RS-FEC PCS lane mapping, lane 0 to 19
+1.264 RS-FEC PCS lane mapping, lane 0 to 19
+1.265 RS-FEC PCS lane mapping, lane 0 to 19
+1.266 RS-FEC PCS lane mapping, lane 0 to 19
+1.267 RS-FEC PCS lane mapping, lane 0 to 19
+1.268 RS-FEC PCS lane mapping, lane 0 to 19
+1.269 RS-FEC PCS lane mapping, lane 0 to 19
+1.270 Reserved
+1.271 Reserved
+1.272 Reserved
+1.273 Reserved
+1.274 Reserved
+1.275 Reserved
+1.276 Reserved
+1.277 Reserved
+1.278 Reserved
+1.279 Reserved
+1.280 RS-FEC PCS alignment status 1 through 4
+1.281 RS-FEC PCS alignment status 1 through 4
+1.282 RS-FEC PCS alignment status 1 through 4
+1.283 RS-FEC PCS alignment status 1 through 4
+1.284 Reserved
+1.299 Reserved
+1.300 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.301 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.302 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.303 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.304 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.305 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.306 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.307 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.308 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.309 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.310 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.311 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.312 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.313 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.314 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.315 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.316 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.317 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.318 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.319 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.320 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.321 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.322 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.323 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.324 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.325 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.326 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.327 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.328 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.329 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.330 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.331 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.332 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.333 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.334 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.335 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.336 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.337 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.338 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.339 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.339 BASE-R FEC corrected blocks counter, lanes 0 through 19
+1.400 200GAUI-8 and 400GAUI-16 chip-to-module recommended CTLE, lane 0 through lane 7
+1.401 200GAUI-8 and 400GAUI-16 chip-to-module recommended CTLE, lane 0 through lane 7
+1.402 200GAUI-8 and 400GAUI-16 chip-to-module recommended CTLE, lane 0 through lane 7
+1.403 200GAUI-8 and 400GAUI-16 chip-to-module recommended CTLE, lane 0 through lane 7
+1.404 200GAUI-8 and 400GAUI-16 chip-to-module recommended CTLE, lane 0 through lane 7
+1.405 200GAUI-8 and 400GAUI-16 chip-to-module recommended CTLE, lane 0 through lane 7
+1.406 200GAUI-8 and 400GAUI-16 chip-to-module recommended CTLE, lane 0 through lane 7
+1.407 200GAUI-8 and 400GAUI-16 chip-to-module recommended CTLE, lane 0 through lane 7
+1.408 400GAUI-16 chip-to-module recommended CTLE, lane 8 through lane 15
+1.409 400GAUI-16 chip-to-module recommended CTLE, lane 8 through lane 15
+1.410 400GAUI-16 chip-to-module recommended CTLE, lane 8 through lane 15
+1.411 400GAUI-16 chip-to-module recommended CTLE, lane 8 through lane 15
+1.412 400GAUI-16 chip-to-module recommended CTLE, lane 8 through lane 15
+1.413 400GAUI-16 chip-to-module recommended CTLE, lane 8 through lane 15
+1.414 400GAUI-16 chip-to-module recommended CTLE, lane 8 through lane 15
+1.415 400GAUI-16 chip-to-module recommended CTLE, lane 8 through lane 15
+1.500 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.501 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.502 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.503 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.504 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.505 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.506 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.507 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.508 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.509 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.510 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.511 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.512 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.513 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.514 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.515 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, receive direction, lane 0 through lane 15
+1.516 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.517 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.518 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.519 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.520 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.521 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.522 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.523 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.524 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.525 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.526 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.527 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.528 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.529 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.530 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.531 200GAUI-n and 400GAUI-n chip-to-chip transmitter equalization, transmit direction, lane 0 through lane 15
+1.700 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.701 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.702 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.703 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.704 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.705 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.706 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.707 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.708 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.709 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.710 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.711 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.712 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.713 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.714 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.715 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.716 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.717 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.718 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.719 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.720 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.721 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.722 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.723 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.724 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.725 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.726 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.727 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.728 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.729 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.730 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.731 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.732 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.733 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.734 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.735 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.736 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.737 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.738 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.739 BASE-R FEC uncorrected blocks counter, lanes 0 through 19
+1.900 BASE-H PMA/PMD control
+1.1100 BASE-R LP coefficient update, lane 0 (copy)
+1.1101 BASE-R LP coefficient update, lanes 1 through 9
+1.1102 BASE-R LP coefficient update, lanes 1 through 9
+1.1103 BASE-R LP coefficient update, lanes 1 through 9
+1.1104 BASE-R LP coefficient update, lanes 1 through 9
+1.1105 BASE-R LP coefficient update, lanes 1 through 9
+1.1106 BASE-R LP coefficient update, lanes 1 through 9
+1.1107 BASE-R LP coefficient update, lanes 1 through 9
+1.1108 BASE-R LP coefficient update, lanes 1 through 9
+1.1109 BASE-R LP coefficient update, lanes 1 through 9
+1.1200 BASE-R LP status report, lane 0 (copy)
+1.1201 BASE-R LP status report, lanes 1 through 9
+1.1202 BASE-R LP status report, lanes 1 through 9
+1.1203 BASE-R LP status report, lanes 1 through 9
+1.1204 BASE-R LP status report, lanes 1 through 9
+1.1205 BASE-R LP status report, lanes 1 through 9
+1.1206 BASE-R LP status report, lanes 1 through 9
+1.1207 BASE-R LP status report, lanes 1 through 9
+1.1208 BASE-R LP status report, lanes 1 through 9
+1.1209 BASE-R LP status report, lanes 1 through 9
+1.1300 BASE-R LD coefficient update, lane 0 (copy)
+1.1301 BASE-R LD coefficient update, lanes 1 through 9
+1.1302 BASE-R LD coefficient update, lanes 1 through 9
+1.1303 BASE-R LD coefficient update, lanes 1 through 9
+1.1304 BASE-R LD coefficient update, lanes 1 through 9
+1.1305 BASE-R LD coefficient update, lanes 1 through 9
+1.1306 BASE-R LD coefficient update, lanes 1 through 9
+1.1307 BASE-R LD coefficient update, lanes 1 through 9
+1.1308 BASE-R LD coefficient update, lanes 1 through 9
+1.1309 BASE-R LD coefficient update, lanes 1 through 9
+1.1400 BASE-R LD status report, lane 0 (copy)
+1.1401 BASE-R LD status report, lanes 1 through 9
+1.1402 BASE-R LD status report, lanes 1 through 9
+1.1403 BASE-R LD status report, lanes 1 through 9
+1.1404 BASE-R LD status report, lanes 1 through 9
+1.1405 BASE-R LD status report, lanes 1 through 9
+1.1406 BASE-R LD status report, lanes 1 through 9
+1.1407 BASE-R LD status report, lanes 1 through 9
+1.1408 BASE-R LD status report, lanes 1 through 9
+1.1409 BASE-R LD status report, lanes 1 through 9
+1.1450 PMD training pattern, lanes 0 to 3
+1.1451 PMD training pattern, lanes 0 to 3
+1.1452 PMD training pattern, lanes 0 to 3
+1.1453 PMD training pattern, lanes 0 to 3
+1.1500 Test-pattern ability
+1.1501 PRBS pattern testing control
+1.1510 Square wave testing control
+1.1512 PRBS13Q testing control
+1.1600 PRBS Tx error counters, lane 0 through lane 15
+1.1601 PRBS Tx error counters, lane 0 through lane 15
+1.1602 PRBS Tx error counters, lane 0 through lane 15
+1.1603 PRBS Tx error counters, lane 0 through lane 15
+1.1604 PRBS Tx error counters, lane 0 through lane 15
+1.1605 PRBS Tx error counters, lane 0 through lane 15
+1.1606 PRBS Tx error counters, lane 0 through lane 15
+1.1607 PRBS Tx error counters, lane 0 through lane 15
+1.1608 PRBS Tx error counters, lane 0 through lane 15
+1.1609 PRBS Tx error counters, lane 0 through lane 15
+1.1610 PRBS Tx error counters, lane 0 through lane 15
+1.1611 PRBS Tx error counters, lane 0 through lane 15
+1.1612 PRBS Tx error counters, lane 0 through lane 15
+1.1613 PRBS Tx error counters, lane 0 through lane 15
+1.1614 PRBS Tx error counters, lane 0 through lane 15
+1.1615 PRBS Tx error counters, lane 0 through lane 15
+1.1700 PRBS Rx error counters, lane 0 through lane 15
+1.1701 PRBS Rx error counters, lane 0 through lane 15
+1.1702 PRBS Rx error counters, lane 0 through lane 15
+1.1703 PRBS Rx error counters, lane 0 through lane 15
+1.1704 PRBS Rx error counters, lane 0 through lane 15
+1.1705 PRBS Rx error counters, lane 0 through lane 15
+1.1706 PRBS Rx error counters, lane 0 through lane 15
+1.1707 PRBS Rx error counters, lane 0 through lane 15
+1.1708 PRBS Rx error counters, lane 0 through lane 15
+1.1709 PRBS Rx error counters, lane 0 through lane 15
+1.1710 PRBS Rx error counters, lane 0 through lane 15
+1.1711 PRBS Rx error counters, lane 0 through lane 15
+1.1712 PRBS Rx error counters, lane 0 through lane 15
+1.1713 PRBS Rx error counters, lane 0 through lane 15
+1.1714 PRBS Rx error counters, lane 0 through lane 15
+1.1715 PRBS Rx error counters, lane 0 through lane 15
+1.1800 TimeSync PMA/PMD capability
+1.1801 TimeSync PMA/PMD transmit path data delay
+1.1802 TimeSync PMA/PMD transmit path data delay
+1.1803 TimeSync PMA/PMD transmit path data delay
+1.1804 TimeSync PMA/PMD transmit path data delay
+1.1805 TimeSync PMA/PMD receive path data delay
+1.1806 TimeSync PMA/PMD receive path data delay
+1.1807 TimeSync PMA/PMD receive path data delay
+1.1808 TimeSync PMA/PMD receive path data delay
+1.1900 10GPASS-XR control and status
+1.1901 DS OFDM control
+1.1902 DS OFDM channel frequency control
+1.1903 DS OFDM channel frequency control
+1.1904 DS OFDM channel frequency control
+1.1905 DS OFDM channel frequency control
+1.1906 DS OFDM channel frequency control
+1.1907 US OFDM control
+1.1908 US OFDM channel frequency control
+1.1915 New CNU control
+1.1916 New CNU info
+1.1917 New CNU info
+1.1918 New CNU info
+1.1919 New CNU info
+1.1920 New CNU info
+1.1921 DS PHY Link frame counter
+1.1922 PMA/PMD timing offset
+1.1923 PMA/PMD timing offset
+1.1924 PMA/PMD power offset
+1.1925 PMA/PMD ranging offset
+1.1926 PMA/PMD ranging offset
+1.1927 DS PMA/PMD data rate
+1.1928 DS PMA/PMD data rate
+1.1929 DS PMA/PMD data rate
+1.1930 US PMA/PMD data rate
+1.1930 US PMA/PMD data rate
+1.1932 US PMA/PMD data rate
+1.1933 10GPASS-XR FEC codeword counter
+1.1934 10GPASS-XR FEC codeword counter
+1.1935 10GPASS-XR FEC codeword success counter
+1.1936 10GPASS-XR FEC codeword success counter
+1.1937 10GPASS-XR FEC codeword fail counter
+1.1938 10GPASS-XR FEC codeword fail counter
+1.1939 PHY Link EPFH counter
+1.1940 PHY Link EPFH error counter
+1.1941 PHY Link EPCH counter
+1.1942 PHY Link EPCH error counter
+1.1943 PHY Link EMB counter
+1.1944 PHY Link EMB error counter
+1.1945 PHY Link FPMB counter
+1.1946 PHY Link FPMB error counter
+1.1947 US PHY Link response time
+1.1948 10GPASS-XR modulation ability
+1.1949 PHY Discovery Response power control
+1.1950 US target receive power
+1.1951 DS transmit power
+1.1952 DS transmit power
+1.1953 DS transmit power
+1.1954 DS transmit power
+1.1955 DS transmit power
+1.1956 US receive power measurement
+1.1957 US receive power measurement
+1.1958 Reported power
+1.2100 BASE-T1 PMA/PMD control
+1.2102 100BASE-T1 PMA/PMD test control
+1.2304 1000BASE-T1 PMA control
+1.2305 1000BASE-T1 PMA status
+1.2306 1000BASE-T1 training
+1.2307 1000BASE-T1 link partner training
+1.2308 1000BASE-T1 test mode control
+7.1 AN status
+7.2 AN device identifier
+7.3 AN device identifier
+7.4 Reserved
+7.5 AN devices in package
+7.6 AN devices in package
+7.14 AN package identifier
+7.15 AN package identifier
+7.16 AN advertisement
+7.18 AN advertisement
+7.19 AN LP Base Page ability
+7.20 AN LP Base Page ability
+7.21 AN LP Base Page ability
+7.22 AN XNP transmit
+7.23 AN XNP transmit
+7.24 AN XNP transmit
+7.25 AN LP XNP ability
+7.27 AN LP XNP ability
+7.32 MultiGBASE-T AN control 1
+7.33 MultiGBASE-T AN status 1
+7.48 Backplane Ethernet, BASE-R copper status
+7.60 EEE advertisement 1
+7.61 EEE link partner ability 1
+7.62 EEE advertisement 2
+7.63 EEE link partner ability 2
+7.64 MultiGBASE-T AN control 2
+7.65 MultiGBASE-T AN status 24
+7.512 BASE-T1 AN control
+7.513 BASE-T1 AN status
+7.514 BASE-T1 AN advertisement
+7.515 BASE-T1 AN advertisement
+7.516 BASE-T1 AN advertisement45.2.
+7.517 BASE-T1 AN LP Base Page ability
+7.518 BASE-T1 AN LP Base Page ability
+7.519 BASE-T1 AN LP Base Page ability
+7.520 BASE-T1 AN Next Page transmit
+7.521 BASE-T1 AN Next Page transmit
+7.522 BASE-T1 AN Next Page transmit
+7.523 BASE-T1 AN LP Next Page ability
+7.524 BASE-T1 AN LP Next Page ability
+7.525 BASE-T1 AN LP Next Page ability
