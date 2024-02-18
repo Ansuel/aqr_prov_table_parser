@@ -254,6 +254,13 @@ def print_final_prov_table(final_prov_table):
 			print("MMD: {}\tReg: {}\tVal: {}".format(
 				mmd_reg, reg, final_prov_table[mmd_reg][reg]))
 
+def parse_firmware(firmware_path):
+	file = io.open(firmware_path, "rb")
+	prov_table = parse_prov_table(file)
+	file.close()
+
+	return prov_table
+
 def main():
 	parser = argparse.ArgumentParser(description="AQR Provision Table parser")
 	parser.add_argument('aqr_firmware', metavar="fw", help="path to AQR Firmware")
@@ -265,11 +272,8 @@ def main():
 				help="Account for bugged values in final provision. Remember these values are actually ignored by the FW.")
 
 	args = parser.parse_args()
-	filename = args.aqr_firmware
 
-	file = io.open(filename, "rb")
-	prov_table = parse_prov_table(file)
-	file.close()
+	prov_table = parse_firmware(args.aqr_firmware)
 
 	# Final provision is what is actually applied to the Aquantia PHY
 	# Accounted of section priority, and values with applied mask and or
