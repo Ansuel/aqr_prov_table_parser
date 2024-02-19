@@ -280,6 +280,13 @@ def parse_reference_regs(reference_regs_file):
 
 		reference_tbl[mmd_reg][reg] = friendly_name
 
+		if int(mmd_reg, 16) == 1:
+			for mmd_reg in ["0x8", "0x9", "0xa", "0xb"]:
+				if not mmd_reg in reference_tbl:
+					reference_tbl[mmd_reg] = {}
+
+				reference_tbl[mmd_reg][reg] = friendly_name
+
 	file.close()
 
 	return reference_tbl
