@@ -24,6 +24,13 @@ options:
 The AQR provision table has a specific format. Here's a breakdown of its structure:
 
 - **Section Start**: Each section always starts with `0x3` followed by a priority ID.
+  The Values after the section header (0x3) are still a bit confusing.
+
+  Bits 7:5 are used for padding length, always a multiple of 2
+  and should be multiply by 2.
+
+  Rest is assumed to be priority or something related but it was notice that Bit 3 ALWAYS result in
+  the value with the last bit set to zero (Example 0xffff -> 0x7fff)
 - **Subsection**: Each section contains a contiguous subsection with a register header and a number of values to write in the format `reg val mask`.
 - **Regs Header**: The regs header is followed by the length of the subsection.
   
@@ -45,27 +52,41 @@ Here's an example of the AQR provision table format:
 || || || || Address            Address
 || || || Data length (to increment if BIT 7 set and * 2)
 || || Reg Header (Length Increment, MMD reg)
-|| Section priority
+|| Section priority (padding length + priority)
 Section header
 ```
-## BUG Discovery on Provision Table
+## Confusion and Investigation on Priority Section
 
-While creating the parser it was made a funny and interesting discovery.
+It looks like Bugged section werent' actually bugged but a very strange
+format that wasn't clear from the start.
 
-Given the described format, the **Regs Header** gives reference of how
-much regs the subsection defines.
+It seems the Priority Section is not actually only Priority but much worse.
 
-It was found that some Table use a **Regs Header** that define one length
-but actually define more regs in the subsection, resulting in the FW
-actually ignoring them and not applying the regs.
+It really seems to contain all sort of bits that declares property of the
+subsections.
 
-The script provide some workaround for this and also print a warning if
-this BUG is detected.
+For example the last 3 bits declare the padding length of each subsection.
+Max padding length value is 8 and the logic is 7:5 value * 2.
+Accepted padding lenght is always a multiple of 2 hence the possible padding
+are 2, 4, 6 and 8.
 
-This was tested that by setting the correct **Regs Header**, the regs are
-correctly applied hence it seems there is a problem with the tool that
-generates this table or who tweaks them made some mistake and embedded
-a bugger table.
+The example format it was notice is the following:
+ 03 41 01 01 01 01 F8 01 8D C0 20 00 20 00
+ - 0x03 section header
+ - 0x41 BIT 6 = padding 2 * 2 = 4
+ - 0x01 0x01 0x01 0x01 padding of 4
+ - 0xf8 reg header
+ - 0x01 data length
+ ...
+
+On top of this with further research I notice the first bits
+could also have different meaning than priority.
+
+BIT 1 seems to always trigger a write
+BIT 3 seems to always zero the last bit (0xffff -> 0x7fff)
+
+Anyone having any clue of this would be very helpful to better understand and
+oarse the section.
 
 ## Contributing
 

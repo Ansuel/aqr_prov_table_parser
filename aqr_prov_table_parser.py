@@ -41,7 +41,7 @@ HEADER_OFFSET = 0x300
 PROV_TABLE_OFFSET = 0x680
 PROV_TABLE_SIZE_MAX = 0x800
 
-ASSUMED_MAX_PRIORITY = 0x3f
+ASSUMED_MAX_PRIORITY = 0x1f
 
 def extract_prov_table_offset(file):
 	file.seek(PRIMARY_OFFSET_OFFSET)
@@ -62,36 +62,13 @@ def extract_prov_table_offset(file):
 
 	return primary_offset + dram_offset + PROV_TABLE_OFFSET
 
-def parse_reg_val_mask(file, bugged=False):
+def parse_reg_val_mask(file):
 	reg = int.from_bytes(file.read(2), byteorder="little")
 	val = int.from_bytes(file.read(2), byteorder="little")
 	mask = int.from_bytes(file.read(2), byteorder="little")
 	reg_val_mask_tbl = { "reg": hex(reg), "val": hex(val), "mask": hex(mask) }
-	if bugged:
-		reg_val_mask_tbl["pos"] = file.tell() - 6
-		reg_val_mask_tbl["bugged"] = True
 
 	return reg_val_mask_tbl
-
-# For some reason and I have no idea how some Provision Table
-# are broken and provide reg-val-mask outside the length value
-# 
-# Example length is 0xF8 0x00 but there are 2 reg-val-mask define
-# 
-# FW correctly skip these (it has been verified that the value
-# are actually NOT set)
-# 
-# This is problematic for the special value of 0x3
-# To detect this assume the max priority is 3F
-# And skip them if detected
-# 
-def check_bugged_section(file):
-	pos = file.tell()
-	header_0 = file.read(1)
-	header_1 = file.read(1)
-	file.seek(pos, os.SEEK_SET)
-	if header_0[0] == 0x3 and header_1[0] & (~ASSUMED_MAX_PRIORITY & 0xff):
-		return parse_reg_val_mask(file, True)
 
 def consume_subsection(file, regs_header):
 	increment_length = regs_header & 0x80
@@ -107,17 +84,11 @@ def consume_subsection(file, regs_header):
 	length = int.from_bytes(file.read(1)) * 2
 	if increment_length:
 		length += 1
-	subsection_tbl["expected_length"] = length
+	subsection_tbl["length"] = length
 
 	subsection_tbl["regs"] = []
 	for _ in range(length):
 		subsection_tbl["regs"].append(parse_reg_val_mask(file))
-
-	# Check if for some reason the Provision Table is bugged
-	# and have confusing header values
-	bugged_reg = check_bugged_section(file)
-	if bugged_reg:
-		subsection_tbl["regs"].append(bugged_reg)
 
 	return subsection_tbl
 
@@ -138,8 +109,25 @@ def consume_subsections(file, prov_table_offset):
 
 	return subsections
 
+def consume_padding(file, padding_len, prov_table_offset):
+	padding_vals = []
+	for _ in range(padding_len):
+		if file.tell() > prov_table_offset + PROV_TABLE_SIZE_MAX:
+			break
+
+		padding_vals.append(file.read(1).hex())
+
+	return padding_vals
+
+
 # Each section ALWAYS stats with 0x3 followed by priority ID
 # 
+# The Values after the section header (0x3) are still a bit confusing
+# Bits 7:5 are used for padding length, always a multiple of 2
+# and should be multiply by 2. Rest is assumed to be priority or
+# something related but it was notice that Bit 3 ALWAYS result in
+# the value with the last bit set to zero (Example 0xffff -> 0x7fff)
+#
 # Each section contains a contigious subection with a reg header and
 # a number of values to write in the format reg val mask
 # regs header is in format followed by the length of the subsection
@@ -158,7 +146,7 @@ def consume_subsections(file, prov_table_offset):
 # || || || || Address           Address
 # || || || Data length (to increment if BIT 7 set and * 2)
 # || || Reg Header (Length Increment, MMD reg)
-# || Section priority 
+# || Section priority (padding length + priority)
 # Section header
 def parse_prov_table(file):
 	prov_table_offset = extract_prov_table_offset(file)
@@ -181,9 +169,17 @@ def parse_prov_table(file):
 			exit(1)
 
 		# Section header is ALWAYS 0x3
-		# Get priority ID
-		priority = int.from_bytes(file.read(1))
+		# Get priority ID and padding info
+		section_header_2 = file.read(1)
+
+		priority = section_header_2[0] & ASSUMED_MAX_PRIORITY
 		section_tbl = { "priority": priority }
+
+		padding_len = ((section_header_2[0] & 0xe0) >> 5) * 2
+		if (padding_len > 0):
+			section_tbl["padding"] = { "length": padding_len,
+						    "vals": consume_padding(file, padding_len, prov_table_offset)}
+
 		# Consume subsections until we find a new section header
 		section_tbl["subsections"] = consume_subsections(file, prov_table_offset)
 
@@ -191,7 +187,7 @@ def parse_prov_table(file):
 
 	return prov_table
 
-def calculate_final_provision(prov_table, reference_tbl=None, show_bugged=False):
+def calculate_final_provision(prov_table, reference_tbl=None):
 	final_provision = {}
 
 	# Very inefficient way but can handle unsorted dictonary
@@ -206,9 +202,6 @@ def calculate_final_provision(prov_table, reference_tbl=None, show_bugged=False)
 					final_provision[mmd_reg] = {}
 
 				for reg_val_mask in subsection["regs"]:
-					if not show_bugged and "bugged" in reg_val_mask:
-						continue
-
 					reg = reg_val_mask["reg"]
 
 					if not reg in final_provision[mmd_reg]:
@@ -229,7 +222,10 @@ def calculate_final_provision(prov_table, reference_tbl=None, show_bugged=False)
 
 def print_prov_table(prov_table):
 	for section in prov_table:
-		print("Found a new section with priority {}".format(section["priority"]))
+		if "padding" in section:
+			print("Found a new section with priority {} padded length {}".format(section["priority"], section["padding"]["length"]))
+		else:
+			print("Found a new section with priority {}".format(section["priority"]))
 
 		for subsection in section["subsections"]:
 			mmd_reg = subsection["mmd_reg"]
@@ -238,9 +234,6 @@ def print_prov_table(prov_table):
 					mmd_reg, reg_val_mask["reg"],
 					reg_val_mask["val"],
 					reg_val_mask["mask"]))
-				if "bugged" in reg_val_mask:
-					print("FOUND BUG IN PROVISION TABLE at pos {} for MMD reg {}".format(
-						reg_val_mask["pos"], mmd_reg))
 
 def print_final_prov_table(final_prov_table):
 	# Very inefficent way to print ordered regs
@@ -305,8 +298,6 @@ def main():
 				help="Output parsed values in JSON format")
 	parser.add_argument('--final-provision', dest="final_provision", action="store_const", const=True,
 				help="Calculate final provision accounted of priority section and masked/ORed regs.")
-	parser.add_argument('--final-show-bugged', dest="show_bugged", action="store_const", const=True,
-				help="Account for bugged values in final provision. Remember these values are actually ignored by the FW.")
 	parser.add_argument('--reference-regs', dest="reference_regs_file", default="reference_regs.txt",
 				help="Provide a reference regs file to add Friendly name to regs on dumping. Check the reference_regs.txt for the format. Only works with --final-provision")
 
@@ -322,8 +313,7 @@ def main():
 	# Accounted of section priority, and values with applied mask and or
 	# with each section.
 	if args.final_provision:
-		prov_table = calculate_final_provision(prov_table, reference_tbl=reference_tbl,
-							show_bugged=args.show_bugged)
+		prov_table = calculate_final_provision(prov_table, reference_tbl=reference_tbl)
 
 	if args.use_json:
 		print(json.dumps(prov_table))
