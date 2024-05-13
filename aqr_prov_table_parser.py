@@ -81,7 +81,7 @@ def consume_subsection(file, regs_header):
 		exit(1)
 	subsection_tbl["mmd_reg"] = hex(mmd_reg)
 
-	length = int.from_bytes(file.read(1)) * 2
+	length = int.from_bytes(file.read(1), byteorder="little") * 2
 	if increment_length:
 		length += 1
 	subsection_tbl["length"] = length
